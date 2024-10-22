@@ -1,0 +1,78 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+#define Size 6
+int top = -1;
+int stack[Size];
+
+void push(int n);
+void pop();
+void display();
+
+int main(){
+    int choice, n;
+    do{
+        printf("\nEnter choice :\n");
+        printf("Enter 1 for push");
+        printf("\n");
+        printf("Enter 2 for pop");
+        printf("\n");
+        printf("Enter 3 for display");
+        printf("\n");
+        printf("Enter 4 for exit");
+        printf("\n");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1: printf("Enter the element to push\n");
+                      scanf("%d",&n);
+                      push(n);
+                   
+                    break;
+            case 2: pop();
+                     
+                      break;
+            case 3: printf("all the elements of stack are:\n");
+                      display();
+                      break;
+            case 4: exit(0);
+            default : printf("wrong choice");
+            }
+        }
+    while(choice!=4);
+        return 0;
+}
+
+void push(int n){
+    if(top==Size-1){
+        printf("stack overflow\n");
+    }
+    else{stack[++top]=n;
+        printf("%d is shifted to %d",n,top);
+        printf("\n");
+    }
+    return;
+}
+
+void pop(){
+    if(top==-1){
+        printf("Stack underflow\n");
+    }
+    else{
+        int n = stack[top--];
+        printf("%d is popped out\n",n);
+    }
+    return;
+}
+
+void display(){
+    if(top==-1){
+        printf("stack is empty\n");
+    }
+    else{
+            printf("elements of stack are:\n");
+            for(int i = 0;i<=top;i++){
+                printf("%d\n",stack[i]);
+            }
+    }
+    return;
+}
