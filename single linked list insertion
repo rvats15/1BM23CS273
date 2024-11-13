@@ -6,7 +6,7 @@ struct Node {
     struct Node* next;
 };
 
-struct Node* head = NULL;  // Initialize head of the list as NULL
+struct Node* head = NULL;  
 
 
 void createLinkedList(int data) {
