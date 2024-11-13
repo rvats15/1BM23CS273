@@ -1,0 +1,145 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head = NULL;  // Initialize head of the list as NULL
+
+// Function to create a linked list with an initial node
+void createLinkedList(int data) {
+    head = (struct Node*)malloc(sizeof(struct Node));
+    head->data = data;
+    head->next = NULL;
+}
+
+// Function to delete the first element
+void deleteFirst() {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+   
+    struct Node* temp = head;
+    head = head->next;
+    free(temp);
+    printf("First element deleted.\n");
+}
+
+// Function to delete a specified element by value
+void deleteSpecified(int value) {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+   
+    if (head->data == value) {
+        deleteFirst();
+        return;
+    }
+
+    struct Node* temp = head;
+    struct Node* prev = NULL;
+
+    while (temp != NULL && temp->data != value) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        printf("Element %d not found in the list.\n", value);
+        return;
+    }
+
+    prev->next = temp->next;
+    free(temp);
+    printf("Element %d deleted.\n", value);
+}
+
+// Function to delete the last element
+void deleteLast() {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    if (head->next == NULL) {
+        free(head);
+        head = NULL;
+        printf("Last element deleted.\n");
+        return;
+    }
+
+    struct Node* temp = head;
+    while (temp->next->next != NULL) {
+        temp = temp->next;
+    }
+
+    free(temp->next);
+    temp->next = NULL;
+    printf("Last element deleted.\n");
+}
+
+// Function to display the contents of the linked list
+void displayLinkedList() {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+   
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    int choice, data, value;
+   
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Create linked list\n");
+        printf("2. Delete first element\n");
+        printf("3. Delete specified element\n");
+        printf("4. Delete last element\n");
+        printf("5. Display list\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                if (head != NULL) {
+                    printf("Linked list already created.\n");
+                } else {
+                    printf("Enter data for initial node: ");
+                    scanf("%d", &data);
+                    createLinkedList(data);
+                }
+                break;
+            case 2:
+                deleteFirst();
+                break;
+            case 3:
+                printf("Enter element to delete: ");
+                scanf("%d", &value);
+                deleteSpecified(value);
+                break;
+            case 4:
+                deleteLast();
+                break;
+            case 5:
+                displayLinkedList();
+                break;
+            case 6:
+                exit(0);
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+    return 0;
+}
