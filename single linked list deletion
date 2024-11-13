@@ -6,16 +6,15 @@ struct Node {
     struct Node* next;
 };
 
-struct Node* head = NULL;  // Initialize head of the list as NULL
+struct Node* head = NULL;  
 
-// Function to create a linked list with an initial node
 void createLinkedList(int data) {
     head = (struct Node*)malloc(sizeof(struct Node));
     head->data = data;
     head->next = NULL;
 }
 
-// Function to delete the first element
+
 void deleteFirst() {
     if (head == NULL) {
         printf("List is empty.\n");
@@ -28,7 +27,7 @@ void deleteFirst() {
     printf("First element deleted.\n");
 }
 
-// Function to delete a specified element by value
+
 void deleteSpecified(int value) {
     if (head == NULL) {
         printf("List is empty.\n");
@@ -58,7 +57,7 @@ void deleteSpecified(int value) {
     printf("Element %d deleted.\n", value);
 }
 
-// Function to delete the last element
+
 void deleteLast() {
     if (head == NULL) {
         printf("List is empty.\n");
@@ -82,7 +81,7 @@ void deleteLast() {
     printf("Last element deleted.\n");
 }
 
-// Function to display the contents of the linked list
+
 void displayLinkedList() {
     if (head == NULL) {
         printf("List is empty.\n");
