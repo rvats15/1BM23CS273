@@ -1,0 +1,148 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+} Node;
+
+
+Node* CreateNode(int data) {
+    Node* newnode = (Node*)malloc(sizeof(Node));
+    newnode->data = data;
+    newnode->prev = NULL;
+    newnode->next = NULL;
+    return newnode;
+}
+
+
+void inserttoleft(Node** head, int target, int new_data) {
+    Node* temp = *head;
+
+
+    while (temp != NULL) {
+        if (temp->data == target) {
+            Node* newnode = CreateNode(new_data);
+            newnode->next = temp;
+            newnode->prev = temp->prev;
+
+            if (temp->prev != NULL) {
+                temp->prev->next = newnode;
+            } else {
+                *head = newnode;
+            }
+
+            temp->prev = newnode;
+            return;
+        }
+        temp = temp->next;
+    }
+
+    printf("Target node with value %d not found\n", target);
+}
+
+
+void deleteNode(Node** head, int value) {
+    Node* temp = *head;
+
+
+    while (temp != NULL) {
+        if (temp->data == value) {
+
+            if (temp->prev != NULL) {
+                temp->prev->next = temp->next;
+            } else {
+                *head = temp->next;
+            }
+            if (temp->next != NULL) {
+                temp->next->prev = temp->prev;
+            }
+
+            free(temp);
+            printf("Node with value %d deleted\n", value);
+            return;
+        }
+        temp = temp->next;
+    }
+
+    printf("Node with value %d not found\n", value);
+}
+
+
+void display(Node* head) {
+    if (head == NULL) {
+        printf("The list is empty\n");
+        return;
+    }
+
+    Node* temp = head;
+    printf("Doubly linked list: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    Node* head = NULL;
+    int choice, value, target, new_data;
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Add node to the list\n");
+        printf("2. Insert node to the left of a specific node\n");
+        printf("3. Delete a node\n");
+        printf("4. Display the list\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to add to the list: ");
+                scanf("%d", &value);
+                if (head == NULL) {
+                    head = CreateNode(value);
+                } else {
+                    Node* temp = head;
+                    while (temp->next != NULL) {
+                        temp = temp->next;
+                    }
+                    temp->next = CreateNode(value);
+                    temp->next->prev = temp;
+                }
+                break;
+
+            case 2:
+                printf("Enter the target node value: ");
+                scanf("%d", &target);
+                printf("Enter value to insert to the left of %d: ", target);
+                scanf("%d", &new_data);
+                inserttoleft(&head, target, new_data);
+                break;
+
+            case 3:
+                printf("Enter value to delete from the list: ");
+                scanf("%d", &value);
+                deleteNode(&head, value);
+                break;
+
+            case 4:
+                display(head);
+                break;
+
+            case 5:
+                printf("Exiting...\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice, please try again.\n");
+        }
+    }
+
+    return 0;
+}
+
+
+
